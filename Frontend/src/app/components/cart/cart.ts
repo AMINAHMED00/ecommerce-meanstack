@@ -12,7 +12,7 @@ import { RouterLink } from "@angular/router";
 export class CartComponent implements OnInit {
 
   private cartService = inject(CartService);
-    private cdr = inject(ChangeDetectorRef);
+  private cdr = inject(ChangeDetectorRef);
 
 
   cart: any;
@@ -126,8 +126,6 @@ export class CartComponent implements OnInit {
 
         this.loadCart();
         this.cdr.detectChanges();
-
-
       },
 
       error: (err) => console.log(err)

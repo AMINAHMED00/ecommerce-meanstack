@@ -10,11 +10,8 @@ export class orderService {
         const cart = await cartModel.findOne({user : userId}).populate("items.product");
 
         if(!cart || cart.items.length === 0){
-            throw new Error("Empty Cart");
-        }
-
-        const session = await mongoose.startSession();
-        session.startTransaction();
+            throw new Error("EmptyCart");
+        }        
 
         try {
 
@@ -31,18 +28,16 @@ export class orderService {
                     product : product._id ,
                     name : product.name ,
                     price : product.price ,
-                    quantity : product.quantity
+                    quantity : quantity
                 });                
             }
 
-            const orderArr = await orderModel.create([{
+            const order = await orderModel.create({
                 user : userId ,
                 items : orderItems ,
                 totalPrice : _totalPrice ,
                 status : "PENDING"
-            } ], {session});
-
-            const order = orderArr[0] ;
+            });            
 
             for(let i = 0 ; i < cart.items.length ; i++){
                 const product = cart.items[i].product as any ;
@@ -50,8 +45,7 @@ export class orderService {
 
                 const result = await productModel.updateOne(
                     {_id : product._id , stock : {$gte : quantity}},
-                    {$inc : {stock : -quantity}} ,
-                    {session}
+                    {$inc : {stock : -quantity}}                    
                 );
 
                 if(result.matchedCount === 0){
@@ -60,18 +54,13 @@ export class orderService {
             }
 
             cart.items = [] as any;
-            await cart.save({session});
-            await session.abortTransaction() ;
+            await cart.save();    
 
             return order ;
         }
-        catch(err : any){
-            await session.abortTransaction() ;
+        catch(err : any){           
             throw err ;
-        }
-        finally {
-            session.endSession();
-        }        
+        }            
     }
 
     async getMyOrders(userId : string) {

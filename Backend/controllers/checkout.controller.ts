@@ -15,6 +15,7 @@ export const createOrder = async(req : any , res : Response) =>{
         });
     }
     catch (err: any) {
+        console.log(err);
         if (err.message === "EmptyCart") {
             return res.status(400).json({
                 msg: "Your cart is empty",

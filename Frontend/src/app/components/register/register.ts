@@ -33,6 +33,7 @@ export class Register {
       this.authService.register(this.registerForm.value as any).subscribe({
         next : (response) =>{
           console.log('Registered successfully:', response);
+          alert("Registration successful. Please verify your email before logging in.");
           this.router.navigate(['/login']);
         },
         error : (err) =>{

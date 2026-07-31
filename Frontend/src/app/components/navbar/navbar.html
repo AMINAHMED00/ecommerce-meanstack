@@ -1,76 +1,109 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-body-tertiary shadow-sm py-3 custom-navbar">
-  <div class="container-fluid px-4">
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
 
-    <a class="navbar-brand fw-bold fs-3 d-flex align-items-center gap-2" routerLink="/">
-      <span class="fs-2">🛍️</span> E-Commerce
+  <div class="container">
+
+    <a class="navbar-brand fw-bold" routerLink="/home">
+      🛍️ E-Commerce
     </a>
 
-    <button class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar">
+
       <span class="navbar-toggler-icon"></span>
+
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="mainNavbar">
 
-      <ul class="navbar-nav ms-lg-5 gap-2">
+      <ul class="navbar-nav mx-auto">
 
         <li class="nav-item">
-          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/home">Home</a>
+          <a class="nav-link" routerLink="/home" routerLinkActive="active-link">
+            Home
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/products">Products</a>
+          <a class="nav-link" routerLink="/products" routerLinkActive="active-link">
+            Products
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/about">About</a>
+          <a class="nav-link" routerLink="/about" routerLinkActive="active-link">
+            About
+          </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/contact">Contact</a>
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active-link">
+            Contact
+          </a>
         </li>
+
+        @if(authService.isLoggedIn()){
+
+        <li class="nav-item">
+          <a class="nav-link"
+             routerLink="/my-orders"
+             routerLinkActive="active-link">
+            My Orders
+          </a>
+        </li>
+
+        }
 
       </ul>
 
-      <div class="d-flex align-items-center ms-lg-auto mt-3 mt-lg-0 gap-3 flex-wrap">
+      <div class="d-flex align-items-center gap-3">
 
-        <!-- <form class="d-flex">
-          <input
-            class="form-control search-input"
-            type="search"
-            placeholder="Search products..."
-            aria-label="Search products"
-          >
-          <button class="btn btn-warning ms-2" type="submit" aria-label="Search">
-            🔍
+        <a
+          class="cart-icon"
+          routerLink="/cart">
+
+          <i class="bi bi-cart3"></i>
+
+        </a>
+
+        @if(!authService.isLoggedIn()){
+
+          <a
+            class="btn btn-outline-light"
+            routerLink="/login">
+
+            Login
+
+          </a>
+
+          <a
+            class="btn btn-warning"
+            routerLink="/register">
+
+            Register
+
+          </a>
+
+        }
+
+        @if(authService.isLoggedIn()){
+
+          <button
+            class="btn btn-danger"
+            (click)="authService.logout()">
+
+            Logout
+
           </button>
-        </form> -->
 
-        @if (!authService.isLoggedIn()) {
-        <a class="nav-link d-flex align-items-center gap-1" routerLink="/login">
-          👤 <span>Login</span>
-        </a>
-
-        <a class="btn btn-warning fw-semibold" routerLink="/register">
-          Register
-        </a>
-      }
-
-      @if (authService.isLoggedIn()) {
-        <button class="btn btn-outline-light" (click)="authService.logout()">
-          Logout
-        </button>
-      }
-
-        <a class="nav-link fs-4 position-relative" routerLink="/cart">
-          🛒
-        </a>
+        }
 
       </div>
 
     </div>
+
   </div>
+
 </nav>

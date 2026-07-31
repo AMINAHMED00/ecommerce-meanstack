@@ -17,9 +17,20 @@ export const Signup = async(req : Request , res : Response)=>{
         if(!existUser){
             const user = await userServices.Register(data);
             const {password : _ , ...safeUser} = user ;
-            mailConfirmation(user.email , String(user.name)).catch((err)=>{
-                console.error("Failed to send Confirmation email:", err);
-            });
+            const verifyToken = Jwt.sign(
+                {
+                    userId : user._id
+                },
+                process.env.JWT_SECRET! ,
+                {
+                    expiresIn : "1d"
+                }
+            );
+
+            mailConfirmation(user.email , String(user.name) , verifyToken).catch((err)=>{
+                console.log(err);
+            })
+            
             return res.status(201).json({msg :"User Rigestered Successfully" , safeUser});
         }
 
@@ -40,6 +51,12 @@ export const login = async(req : Request , res : Response)=>{
         if(!find_user){
             return res.status(401).json({
                 msg : "User Not Found , please Register",
+            });
+        }
+
+        if(!find_user.isVerified){
+            return res.status(401).json({
+                msg: "Please verify your email first"
             });
         }
 
@@ -112,5 +129,49 @@ export const updateUser = async(req : Request , res : Response)=>{
     }
     catch(err : any){
         res.status(500).json({msg : "Server Error" , error : err});
+    }
+}
+
+
+export const verifyEmail = async (req: Request, res: Response) => {
+    try {
+
+        const token = String(req.params.token);
+
+        const decoded: any = Jwt.verify(
+            token,
+            process.env.JWT_SECRET!
+        );
+
+        const user = await userServices.getUserById(decoded.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                msg: "User Not Found"
+            });
+        }
+
+        if (user.isVerified) {
+            return res.status(200).json({
+                msg: "Email Already Verified"
+            });
+        }
+
+        user.isVerified = true;
+
+        await user.save();
+
+        return res.status(200).json({
+            msg: "Email Verified Successfully"
+        });
+
+    } catch (err: any) {
+
+        console.log(err);
+
+        return res.status(400).json({
+            msg: "Invalid Or Expired Token"
+        });
+
     }
 }

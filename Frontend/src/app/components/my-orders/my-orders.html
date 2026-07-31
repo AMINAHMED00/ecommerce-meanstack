@@ -1,0 +1,136 @@
+<section class="container py-5">
+
+    <h2 class="fw-bold mb-4">
+        My Orders
+    </h2>
+
+    @if(loading){
+
+        <div class="text-center py-5">
+
+            <div class="spinner-border text-warning"></div>
+
+        </div>
+
+    }
+
+    @else if(orders.length === 0){
+
+        <div class="text-center py-5">
+
+            <h3>No Orders Yet</h3>
+
+            <p class="text-muted">
+
+                Start shopping now 🚀
+
+            </p>
+
+        </div>
+
+    }
+
+    @else{
+
+        @for(order of orders; track order._id){
+
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <strong>
+
+                            Order #
+
+                            {{order._id.slice(-6)}}
+
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{order.createdAt | date:'medium'}}
+
+                        </small>
+
+                    </div>
+
+                    <span
+                        class="badge"
+                        [ngClass]="{
+                          'bg-warning':order.status==='PENDING',
+                          'bg-success':order.status==='DELIVERED',
+                          'bg-primary':order.status==='SHIPPED',
+                          'bg-danger':order.status==='CANCELLED'
+                        }">
+
+                        {{order.status}}
+
+                    </span>
+
+                </div>
+
+                <div class="card-body">
+
+                    @for(item of order.items; track item.product){
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <div>
+
+                                <h5 class="mb-1">
+
+                                    {{item.name}}
+
+                                </h5>
+
+                                <small>
+
+                                    Qty :
+
+                                    {{item.quantity}}
+
+                                </small>
+
+                            </div>
+
+                            <strong>
+
+                                {{item.price | number}}
+
+                                EGP
+
+                            </strong>
+
+                        </div>
+
+                        <hr>
+
+                    }
+
+                    <div class="text-end">
+
+                        <h4 class="text-warning">
+
+                            Total :
+
+                            {{order.totalPrice | number}}
+
+                            EGP
+
+                        </h4>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+    }
+
+</section>
