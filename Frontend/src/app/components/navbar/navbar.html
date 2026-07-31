@@ -1,0 +1,76 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-body-tertiary shadow-sm py-3 custom-navbar">
+  <div class="container-fluid px-4">
+
+    <a class="navbar-brand fw-bold fs-3 d-flex align-items-center gap-2" routerLink="/">
+      <span class="fs-2">🛍️</span> E-Commerce
+    </a>
+
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-lg-5 gap-2">
+
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/home">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/products">Products</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/about">About</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link px-3" routerLinkActive="active-link" routerLink="/contact">Contact</a>
+        </li>
+
+      </ul>
+
+      <div class="d-flex align-items-center ms-lg-auto mt-3 mt-lg-0 gap-3 flex-wrap">
+
+        <!-- <form class="d-flex">
+          <input
+            class="form-control search-input"
+            type="search"
+            placeholder="Search products..."
+            aria-label="Search products"
+          >
+          <button class="btn btn-warning ms-2" type="submit" aria-label="Search">
+            🔍
+          </button>
+        </form> -->
+
+        @if (!authService.isLoggedIn()) {
+        <a class="nav-link d-flex align-items-center gap-1" routerLink="/login">
+          👤 <span>Login</span>
+        </a>
+
+        <a class="btn btn-warning fw-semibold" routerLink="/register">
+          Register
+        </a>
+      }
+
+      @if (authService.isLoggedIn()) {
+        <button class="btn btn-outline-light" (click)="authService.logout()">
+          Logout
+        </button>
+      }
+
+        <a class="nav-link fs-4 position-relative" routerLink="/cart">
+          🛒
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,56 @@
+<section class="latest-news py-5">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="section-title">
+                Latest News
+            </h2>
+
+            <p class="text-muted">
+                Stay updated with the latest technology news and special offers.
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            @for(item of news; track item.title){
+
+                <div class="col-lg-4">
+
+                    <div class="card news-card h-100">
+
+                        <img
+                            [src]="item.image"
+                            class="card-img-top news-image"
+                            [alt]="item.title">
+
+                        <div class="card-body">
+
+                            <small class="text-warning fw-bold">
+                                {{item.date}}
+                            </small>
+
+                            <h4 class="mt-2">
+                                {{item.title}}
+                            </h4>
+
+                            <p class="text-muted">
+                                {{item.description}}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</section>

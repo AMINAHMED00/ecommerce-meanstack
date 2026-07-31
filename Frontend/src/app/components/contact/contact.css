@@ -1,0 +1,174 @@
+.container{
+    min-height:70vh;
+    margin-top: 30px;
+}
+
+.contact-card{
+
+    position:relative;
+
+    background:#fff;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:220px 220px 0 0;
+
+    padding:70px 45px 60px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+
+    transition:.4s;
+}
+.contact-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+}
+.star{
+
+    position:absolute;
+
+    right:35px;
+
+    top:35px;
+
+    font-size:30px;
+
+    color:#111;
+}
+.company-name{
+
+    letter-spacing:5px;
+
+    color:#777;
+
+    margin-bottom:10px;
+
+    text-transform:uppercase;
+}
+
+.contact-card h1{
+
+    font-size:48px;
+
+    margin-bottom:40px;
+
+    font-family:Georgia, serif;
+}
+
+.info-item{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:28px 0;
+
+    font-size:18px;
+}
+
+.info-item i{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    background:#111;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-right:20px;
+
+    font-size:18px;
+}
+
+.social{
+
+    text-align:center;
+}
+
+.social h5{
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+}
+
+.icons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+}
+
+.icons a{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:#222;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-size:22px;
+}
+
+.icons a:hover{
+
+    background:#ffc107;
+
+    color:#111;
+
+    transform:translateY(-5px);
+}
+
+@media(max-width:768px){
+
+.contact-card{
+
+    border-radius:120px 120px 0 0;
+
+    padding:50px 25px;
+
+}
+
+.contact-card h1{
+
+    font-size:38px;
+
+}
+
+.info-item{
+
+    font-size:16px;
+
+}
+
+}
+
+
